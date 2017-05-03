@@ -19,6 +19,13 @@ public class Main
         String[] tmp = syllabize("jarosław","PL").split("-");
         net.add(tmp[0], null);
         net.add(tmp[1], tmp[0]);
+        net.add(tmp[1], tmp[0]);
+        net.add(tmp[1], tmp[0]);
+        net.add(tmp[1], tmp[0]);
+        net.add(tmp[2], tmp[0]);
+        net.add(tmp[2], tmp[0]);
+        net.add(tmp[2], tmp[0]);
         net.add(tmp[2], tmp[1]);
+        return;
     }
 }
