@@ -5,9 +5,7 @@
  */
 package Syllabizator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,12 +14,10 @@ import java.util.Map;
  */
 public class Net
 {
-    private List <Node> nodes;
     private Map <String,Node> occuredSyllables;
     
     public Net()
     {
-        this.nodes = new ArrayList<Node>();
         this.occuredSyllables = new HashMap<String,Node>();
     }
     
