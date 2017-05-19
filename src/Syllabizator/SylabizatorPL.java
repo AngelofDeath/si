@@ -149,31 +149,24 @@ public class SylabizatorPL {
             int j=0;
             wyraz=wyraz.trim();
             wyraz=wyraz.toLowerCase();
-            for (int s=60;s>-1;s--)
-                {
-                for (int d=0; d<wyraz.length()-zwrocSymbol(s).length(); d++)
-                    {
-                     if (wyraz.startsWith(zwrocSymbol(s), d)==true) 
-                     wyraz.replace(zwrocSymbol(s),"-"+Integer.toString(s)+"-");
-                     wyraz = wyraz.replace(zwrocSymbol(s),Integer.toString(s)+"-");
-                    }
+            for (int s=60;s>-1;s--){
+                for (int d=0; d<wyraz.length()-zwrocSymbol(s).length(); d++){
+                    wyraz = wyraz.replace(zwrocSymbol(s),Integer.toString(s)+"-");
                 }
+            }
             wyraz=wyraz.replace("﻿", "");
-            System.out.println(wyraz);
             String[] temp = wyraz.split("\\-");
             Integer[] symbol = new Integer[temp.length];
             
             for(int o=0;o<temp.length;o++)
                 {
                 symbol[o] = Integer.parseInt(temp[o]);
-                System.out.println(czySamogloska(zwrocSymbol(symbol[o])));
                 }
             
             j=0;
             
            while (j<symbol.length)
                 {
-                System.out.println(Integer.toString(j));
                 if (czySamogloska(zwrocSymbol(symbol[j]))==true) 
                     {
                     sylaba[k]=zwrocSymbol(symbol[j]);  
@@ -279,19 +272,19 @@ public class SylabizatorPL {
                                             //k++;
                                                 if (j<symbol.length)
                                                 {
-                                                if (czySamogloska(zwrocSymbol(symbol[j]))==true) // pierwsza spolgloska - druga spolgloska - trzecia spolgloska - czwarta samogloska - piata samogloska // raczej nie zajdzie
-                                                {k++;} 
-                                                else
-                                                {
-                                                    
-                                                  sylaba[k]=sylaba[k]+zwrocSymbol(symbol[j]);
-                                                  //System.out.println(sylaba[k]);
-                                                  j++;
-                                                  k++;  
-                                                }
+                                                    if (czySamogloska(zwrocSymbol(symbol[j]))==true) // pierwsza spolgloska - druga spolgloska - trzecia spolgloska - czwarta samogloska - piata samogloska // raczej nie zajdzie
+                                                    {k++;} 
+                                                    else
+                                                    {
+
+                                                      sylaba[k]=sylaba[k]+zwrocSymbol(symbol[j]);
+                                                      //System.out.println(sylaba[k]);
+                                                      j++;
+                                                      k++;  
+                                                    }
                                                 
                                                 }
-                                                else sylaba[k]=sylaba[k]+zwrocSymbol(symbol[j]);
+                                                else {}
                                             }
                                         else {} // // pierwsza spolgloska - druga spolgloska - trzecia spolgloska - czwarta spolgloska raczej nie wystepuje
                                         }
