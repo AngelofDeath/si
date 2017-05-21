@@ -45,14 +45,24 @@ public class Main
         }
         net.setUnconditionalProbs();
         net.setConditionalProbs();
+        
+        int verseLength = 10;
+        VerseStructureGenerator vsg = new VerseStructureGenerator(verseLength);
         for(int i=0; i<100; i++){
-            Node tmp2 = net.getFirstSyllable();
-            System.out.print(tmp2.getSyllable());
-            tmp2 = tmp2.nextNode();
-            System.out.print(tmp2.getSyllable());
-            tmp2 = tmp2.nextNode();
-            System.out.print(tmp2.getSyllable());
+            int[] verseDistribution = vsg.getRandomDistribution();
+            for(int sylsInWord : verseDistribution){
+                Node syllable = net.getFirstSyllable();
+                System.out.print(syllable.getSyllable());
+                for(int j=1; j<sylsInWord; j++){
+                    syllable = syllable.nextNode();
+                    System.out.print(syllable.getSyllable());                    
+                }
+                System.out.print(" ");
+            }
             System.out.println();
+            if(i%4==3){
+                System.out.println();
+            }
         }
     }
 }
