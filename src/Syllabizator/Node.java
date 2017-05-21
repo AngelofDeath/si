@@ -100,7 +100,7 @@ public class Node
             last = entry.getKey();
         }
         if(last == null)
-            last = new Node("pie");
+            last = new Node("nie");
         return last;
     }
 }
