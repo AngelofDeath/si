@@ -23,30 +23,40 @@ public class Net
         this.occuredSyllables = new HashMap<String,Node>();
     }
     
-    public void add(String s,String pre)
+    public void add(String s,String pre, String pre2)
     {
         Node n = this.occuredSyllables.get(s);
-        if(n != null && pre != null)
+        if(n != null && pre != null && pre2 == null) //2. syl 
         {
-            this.occuredSyllables.get(pre).add(n);
+            this.occuredSyllables.get(pre).add(n,null);
         }
-        else if(n == null && pre != null)
+        else if(n == null && pre != null && pre2 == null) //2.syll
         {
             Node newNode = new Node(s);
             this.occuredSyllables.put(s, newNode);
-            this.occuredSyllables.get(pre).add(newNode);
+            this.occuredSyllables.get(pre).add(newNode,null);
         }
-        else if(n == null && pre == null)
+        else if(n == null && pre == null && pre2 == null) //1. syll
         {
             Node newNode = new Node(s);
             newNode.incrementCounter();
             this.occuredSyllables.put(s, newNode);
             nWords++;
         }
-        else if(n != null && pre == null)
+        else if(n != null && pre == null && pre2 == null) //1. syll
         {
             n.incrementCounter();
             nWords++;
+        }
+        else if(n == null && pre != null && pre2 != null)
+        {
+            Node newNode = new Node(s);
+            this.occuredSyllables.put(s, newNode);
+            this.occuredSyllables.get(pre).add(newNode,this.occuredSyllables.get(pre2));
+        }
+        else if(n != null && pre != null && pre2 != null)
+        {
+            this.occuredSyllables.get(pre).add(n,this.occuredSyllables.get(pre2));
         }
     }
     

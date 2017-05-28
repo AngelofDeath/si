@@ -74,9 +74,11 @@ public class SyllabizatorFX extends Application {
                     
                     for (int i=0; i<tmp.length; i++){
                         if(i == 0)
-                            net.add(tmp[0], null);
+                            net.add(tmp[0], null, null);
+                        else if (i==1)
+                            net.add(tmp[1], tmp[0],null);
                         else
-                            net.add(tmp[i], tmp[i-1]);
+                            net.add(tmp[1], tmp[0],null);
                     }
                     }
                     word = br.readLine();

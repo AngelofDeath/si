@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class Node
 {
-    private Map <Node,Double> neighbors;
+    private Map <List<Node>,Double> neighbors;
     private List <Node> parents;
     private String syllable;
     private int sum, nStartingNodes;
@@ -25,27 +25,43 @@ public class Node
     public Node(String syllable)
     {
         this.syllable = syllable;
-        this.neighbors = new HashMap<Node,Double>();
+        this.neighbors = new HashMap<List<Node>,Double>();
         this.parents = new ArrayList<Node>();
         this.sum = 0;
         this.nStartingNodes = 0; 
     }
     
-    public void add(Node node)
+    public void add(Node node, Node pre)
     {
-        for (Map.Entry<Node, Double> entry : this.neighbors.entrySet()) 
+        for (Map.Entry<List<Node>, Double> entry : this.neighbors.entrySet()) 
         {
-            Node key = entry.getKey();
-            if(key.getSyllable().equals(node.getSyllable()))
+            List<Node> key = entry.getKey();
+            if(pre == null)
             {
-                entry.setValue(entry.getValue()+1);
-                this.sum += 1;
-                return;
+                if(key.get(1).getSyllable().equals(node.getSyllable()))
+                {
+                    entry.setValue(entry.getValue()+1);
+                    this.sum += 1;
+                    return;
+                }
+            }
+            else
+            {
+                if(key.get(0) != null)
+                    if(key.get(0).getSyllable().equals(pre.getSyllable()) && key.get(1).getSyllable().equals(node.getSyllable()))
+                    {
+                        entry.setValue(entry.getValue()+1);
+                        this.sum += 1;
+                        return;
+                    }
             }
         }
         node.addParent(this);
         this.sum += 1;
-        this.neighbors.put(node, 1.0);
+        ArrayList<Node> arr =  new ArrayList<Node>();
+        arr.add(0, pre);
+        arr.add(1, node);
+        this.neighbors.put(arr, 1.0);
     }
     
     public String getSyllable()
@@ -83,7 +99,7 @@ public class Node
     
     public void setConditionalProbs(){ // changes value in neighbours map from neighbour counter to cdf value
         double distribution = 0, tmp;
-        for (Map.Entry<Node, Double> entry : this.neighbors.entrySet()) {
+        for (Map.Entry<List<Node>, Double> entry : this.neighbors.entrySet()) {
             tmp = entry.getValue() / sum;
             distribution += tmp;
             entry.setValue(distribution);
@@ -94,10 +110,10 @@ public class Node
         Random gen = new Random();
         double rand = gen.nextDouble();
         Node last = null;
-        for (Map.Entry<Node, Double> entry : this.neighbors.entrySet()) {
+        for (Map.Entry<List<Node>, Double> entry : this.neighbors.entrySet()) {
             if(rand <= entry.getValue())
-                return entry.getKey();
-            last = entry.getKey();
+                return entry.getKey().get(1);
+            last = entry.getKey().get(1);
         }
         if(last == null)
             last = new Node("nie");

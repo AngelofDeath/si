@@ -21,7 +21,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Net net = new Net();
+        Net net = new Net();     
         String[] tmp;
         try {
             BufferedReader br = new BufferedReader(new FileReader("slowa.txt"));
@@ -30,9 +30,11 @@ public class Main
                 tmp = syllabize(word, "PL").split("-");
                 for (int i=0; i<tmp.length; i++){
                     if(i == 0)
-                        net.add(tmp[0], null);
+                        net.add(tmp[0], null, null);
+                    else if (i==1)
+                        net.add(tmp[1], tmp[0],null);
                     else
-                        net.add(tmp[i], tmp[i-1]);
+                        net.add(tmp[i], tmp[i-1],null);
                 }
                 word = br.readLine();
             }
